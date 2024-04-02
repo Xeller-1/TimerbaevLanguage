@@ -30,7 +30,7 @@ namespace TimerbaevLanguage
         public string GenderCode { get; set; }
         public string Phone { get; set; }
         public string PhotoPath { get; set; }
-        public Nullable<System.DateTime> Birthday { get; set; }
+        public System.DateTime Birthday { get; set; }
         public string Email { get; set; }
         public System.DateTime RegistrationDate { get; set; }
     
@@ -39,6 +39,24 @@ namespace TimerbaevLanguage
         public virtual ICollection<ClientService> ClientService { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tag { get; set; }
+
+        public string BirthdayFormat
+        {
+            get
+            {
+
+                return Birthday.ToShortDateString();
+            }
+        }
+
+        public string RegistrationDateFormat
+        {
+            get
+            {
+
+                return RegistrationDate.ToShortDateString();
+            }
+        }
 
         public int VisitCount
         {
@@ -52,7 +70,7 @@ namespace TimerbaevLanguage
             get
             {
                 if (VisitCount == 0)
-                    return "Нет";
+                    return "Нет посещений";
                 else
                     return TimerbaevLanguageEntities.GetContext().ClientService.Where(x => x.ClientID == this.ID).Max(p => p.StartTime).ToShortDateString();
             }
